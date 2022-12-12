@@ -1,0 +1,42 @@
+﻿@using Microsoft.AspNetCore.Identity
+@inject SignInManager<IdentityUser> SignInManager
+@inject UserManager<IdentityUser> UserManager
+@model IEnumerable<Burger_King.Models.Add_on>
+
+@{
+    ViewData["Title"] = "Index";
+}
+
+<h1>Index</h1>
+@if (SignInManager.IsSignedIn(User))
+{
+    <p>
+        <a asp-action="Create">Create New</a>
+    </p>
+}
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.addon_name)
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+@foreach (var item in Model) {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.addon_name)
+            </td>
+            <td>
+                    @if (SignInManager.IsSignedIn(User))
+                    {
+                <a asp-action="Edit" asp-route-id="@item.addon_id">Edit |</a> 
+                <a asp-action="Delete" asp-route-id="@item.addon_id">Delete</a>
+                    }
+            </td>
+        </tr>
+}
+    </tbody>
+</table>

@@ -1,0 +1,66 @@
+﻿@using Microsoft.AspNetCore.Identity
+@inject SignInManager<IdentityUser> SignInManager
+@inject UserManager<IdentityUser> UserManager
+@model IEnumerable<Burger_King.Models.Burgers>
+
+@{
+    ViewData["Title"] = "Index";
+}
+
+<h1>Burgers</h1>
+@if (SignInManager.IsSignedIn(User))
+{
+    <p>
+        <a asp-action="Create">Create New</a>
+    </p>
+}
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.burger_name)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.burger_price)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.burger_url)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.burgerSauce)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.burgerAddOn)
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+@foreach (var item in Model) {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.burger_name)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.burger_price)
+            </td>
+            <td>
+                    <img src=@Html.DisplayFor(modelItem => item.burger_url) width=70/>
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.burgerSauce.sauce_name)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.burgerAddOn.addon_name)
+            </td>
+                @if (SignInManager.IsSignedIn(User))
+                {
+            <td>
+                <a asp-action="Edit" asp-route-id="@item.burger_id">Edit | </a> 
+                <a asp-action="Delete" asp-route-id="@item.burger_id">Delete</a>
+            </td>
+                }
+        </tr>
+}
+    </tbody>
+</table>
